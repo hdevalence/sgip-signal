@@ -46,7 +46,7 @@ use chrono::{DateTime, Duration, Utc};
 use serde::{Deserialize, Serialize};
 
 /// A Marginal Operating Emissions Rate (MOER).
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Moer {
     /// The grid region for the rate.
     #[serde(rename = "ba")]
@@ -66,7 +66,7 @@ pub struct Moer {
 ///
 /// To get the [`Moer`] this forecast predicts at a given time, use
 /// [`Forecast::at`].
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[serde(try_from = "serde_help::ForecastRaw")]
 pub struct Forecast {
     /// The grid region for the forecast.
