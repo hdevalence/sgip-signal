@@ -100,6 +100,23 @@ impl Forecast {
             _ => None,
         }
     }
+
+    /// Iterate over the `Moer`s predicted by this forecast.
+    pub fn moers(&self) -> impl Iterator<Item = Moer> + '_ {
+        // The end of each interval is the start of the next.
+        let starts = self.data.iter();
+        let ends = self.data.iter().skip(1);
+        let region = self.region;
+
+        starts.zip(ends).map(move |((start, rate), (end, _next_rate))| {
+            Moer {
+                region,
+                rate: *rate,
+                start: *start,
+                duration: *end - *start,
+            }
+        })
+    }
 }
 
 /// An authenticated session with the SGIP Signal API.
